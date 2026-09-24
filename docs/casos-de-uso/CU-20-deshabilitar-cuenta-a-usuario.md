@@ -49,5 +49,11 @@ La cuenta del usuario queda deshabilitada y todas sus sesiones activas quedan in
 | RF-34 | El sistema debe permitir que el administrador dé de baja (deshabilite) la cuenta de un usuario, impidiendo cualquier acceso posterior, sin eliminar su historial de auditoría. |
 | RN-19 | Dar de baja una cuenta invalida todas sus sesiones activas e impide iniciar sesión nuevamente, pero no elimina su historial de auditoría (RN-05). |
 
+## Diseño
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-20: Deshabilitar Cuenta a Usuario](../assets/robustez/CU-20-deshabilitar-cuenta-a-usuario.jpeg)
+
 ---
 [← Volver al índice](../00-indice.md)

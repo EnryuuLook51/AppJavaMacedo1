@@ -1,21 +1,29 @@
-# Requisitos por caso — Sistema de acceso a servicios universitarios
+# Sistema de acceso a servicios universitarios
 
-*Versión 2.1 definitiva — incluye Buscar Usuario, Modificar Datos Básicos y Dar de Baja de Usuario*
+Informe del caso: análisis de requerimientos, casos de uso, diseño y prototipo.
 
 ## Documentos generales
 
+- [Datos del informe](informe.md)
 - [Requisitos por caso](requisitos.md)
-- [Actores y criterio de descomposición](actores.md)
+- [Actores](actores.md)
 - [Reglas de negocio](reglas-de-negocio.md)
 - [Matriz de trazabilidad](matriz-trazabilidad.md)
+
+## Diseño
+
+- [Diagramas de casos de uso](diseno/diagramas-casos-de-uso.md)
+- [Diagramas de robustez](diseno/diagramas-robustez.md)
+- [Prototipo](diseno/prototipo.md)
+- [Secciones del Word sin contenido todavía](diseno/pendientes-del-word.md)
 
 ## Casos de uso
 
 | CU | Nombre | Actor(es) | Tipo |
 | --- | --- | --- | --- |
 | [CU-01](casos-de-uso/CU-01-registrar-usuario-en-el-sistema-de-acceso.md) | Registrar Usuario en el Sistema de Acceso | Administrador del sistema | Principal |
-| [CU-02](casos-de-uso/CU-02-buscar-usuario.md) | Buscar Usuario | Administrador del sistema | Principal · nuevo v2.0 |
-| [CU-03](casos-de-uso/CU-03-modificar-datos-basicos-de-usuario.md) | Modificar Datos Básicos de Usuario | Administrador del sistema | Principal · nuevo v2.0 |
+| [CU-02](casos-de-uso/CU-02-buscar-usuario.md) | Buscar Usuario | Administrador del sistema | Principal |
+| [CU-03](casos-de-uso/CU-03-modificar-datos-basicos-de-usuario.md) | Modificar Datos Básicos de Usuario | Administrador del sistema | Principal |
 | [CU-04](casos-de-uso/CU-04-iniciar-sesion.md) | Iniciar Sesión | Estudiante, Docente, Trabajador administrativo | Principal |
 | [CU-05](casos-de-uso/CU-05-cerrar-sesion.md) | Cerrar Sesión | Estudiante, Docente, Trabajador administrativo | Principal |
 | [CU-06](casos-de-uso/CU-06-cerrar-sesion-por-inactividad.md) | Cerrar Sesión por Inactividad | Sistema | Principal |

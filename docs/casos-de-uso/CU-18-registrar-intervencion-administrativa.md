@@ -30,5 +30,11 @@ La intervención administrativa queda registrada y disponible para su consulta p
 | RF-29 | Registrar toda intervención administrativa (quién, cuándo, sobre qué usuario y qué acción) para fines de auditoría. |
 | RNF-05 | Las operaciones administrativas deben estar desacopladas del mecanismo interno de acceso. |
 
+## Diseño
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-18: Registrar Intervención Administrativa](../assets/robustez/CU-18-registrar-intervencion-administrativa.jpeg)
+
 ---
 [← Volver al índice](../00-indice.md)

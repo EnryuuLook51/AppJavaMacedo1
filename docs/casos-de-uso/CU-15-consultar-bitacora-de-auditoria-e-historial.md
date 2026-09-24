@@ -39,5 +39,23 @@ Los registros históricos permanecen almacenados sin ser modificados por la cons
 | RF-25 | Permitir que personal autorizado intervenga ante incidentes de acceso. |
 | RF-26 | Permitir revisar el historial de accesos y actividades de un usuario en el contexto de un incidente. |
 
+## Diseño
+
+### Diagrama de casos de uso
+
+![Diagrama 5: Auditoría y Configuración de Seguridad](../assets/casos-de-uso/diagrama-5-auditoria-y-configuracion-de-seguridad.jpeg)
+
+*Diagrama 5: Auditoría y Configuración de Seguridad*
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-15: Consultar Bitácora de Auditoría e Historial](../assets/robustez/CU-15-consultar-bitacora-de-auditoria-e-historial.jpeg)
+
+### Prototipo
+
+![Prototipo: Bitácora de auditoría](../assets/prototipo/13-bitacora-de-auditoria.png)
+
+*Bitácora de auditoría.* Filtros por usuario, resultado y rango de fechas; tabla de intentos de acceso e intervenciones administrativas registradas.
+
 ---
 [← Volver al índice](../00-indice.md)

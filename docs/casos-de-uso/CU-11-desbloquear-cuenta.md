@@ -45,5 +45,17 @@ La cuenta queda disponible para el acceso normal y el contador de intentos falli
 | RF-03 | Un inicio de sesión exitoso reinicia el contador de intentos fallidos. |
 | RF-28 | Verificar que el actor posea el rol de administración antes de ejecutar cualquier operación administrativa. |
 
+## Diseño
+
+### Diagrama de casos de uso
+
+![Diagrama 3: Administración de sesiones y recuperación de acceso](../assets/casos-de-uso/diagrama-3-sesiones-y-recuperacion-de-acceso.jpeg)
+
+*Diagrama 3: Administración de sesiones y recuperación de acceso*
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-11: Desbloquear Cuenta](../assets/robustez/CU-11-desbloquear-cuenta.jpeg)
+
 ---
 [← Volver al índice](../00-indice.md)

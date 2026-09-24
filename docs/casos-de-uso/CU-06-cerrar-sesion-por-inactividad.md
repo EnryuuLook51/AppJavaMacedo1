@@ -30,5 +30,11 @@ La sesión inactiva queda invalidada automáticamente. Las demás sesiones activ
 | RN-04 | Una sesión que permanezca inactiva durante el tiempo configurado deja de ser válida. |
 | RN-16 | Una sesión solo puede finalizar por tres vías excluyentes entre sí: expiración por inactividad, cierre voluntario del propio usuario, o cierre por intervención de un administrador autorizado. |
 
+## Diseño
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-06: Cerrar Sesión por Inactividad](../assets/robustez/CU-06-cerrar-sesion-por-inactividad.png)
+
 ---
 [← Volver al índice](../00-indice.md)

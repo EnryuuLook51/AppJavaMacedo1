@@ -43,5 +43,17 @@ El usuario recibe un token temporal para completar su propia recuperación de ac
 | RF-28 | Verificar que el actor posea el rol de administración antes de ejecutar cualquier operación administrativa. |
 | RNF-04 | El proceso no debe exponer al administrador la credencial del usuario. |
 
+## Diseño
+
+### Diagrama de casos de uso
+
+![Diagrama 3: Administración de sesiones y recuperación de acceso](../assets/casos-de-uso/diagrama-3-sesiones-y-recuperacion-de-acceso.jpeg)
+
+*Diagrama 3: Administración de sesiones y recuperación de acceso*
+
+### Diagrama de robustez
+
+*El Word aún no incluye el diagrama de robustez de este caso de uso.*
+
 ---
 [← Volver al índice](../00-indice.md)

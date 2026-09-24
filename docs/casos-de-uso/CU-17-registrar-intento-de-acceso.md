@@ -33,5 +33,11 @@ El intento queda registrado de forma permanente en la bitácora, disponible para
 | RF-10 | Registrar cada intento de acceso: usuario, fecha/hora, resultado, contexto y motivo de rechazo. |
 | RNF-01 | La información histórica debe persistir, incluso si el usuario luego ingresa correctamente. |
 
+## Diseño
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-17: Registrar Intento de Acceso](../assets/robustez/CU-17-registrar-intento-de-acceso.jpeg)
+
 ---
 [← Volver al índice](../00-indice.md)

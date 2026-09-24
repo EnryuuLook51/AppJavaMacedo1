@@ -1,6 +1,6 @@
 # CU-02: Buscar Usuario
 
-Caso de uso principal · Nuevo en v2.0
+Caso de uso principal
 
 ## Actor(es)
 
@@ -38,6 +38,22 @@ El administrador obtiene la información del usuario solicitado. La búsqueda es
 | --- | --- |
 | RF-32 | El sistema debe permitir que el administrador busque y consulte la información de un usuario: identificación, roles vigentes, estado de la cuenta y sesiones activas. |
 | RN-18 | La búsqueda de un usuario es una operación de solo consulta: no modifica ningún dato del usuario ni de sus sesiones, roles o historial. |
+
+## Diseño
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-02: Buscar Usuario](../assets/robustez/CU-02-buscar-usuario.png)
+
+### Prototipo
+
+![Prototipo: Buscar usuario](../assets/prototipo/08-buscar-usuario.png)
+
+*Buscar usuario.* Búsqueda por identificación o nombre; tabla con roles vigentes y estado de la cuenta.
+
+![Prototipo: Ficha de usuario](../assets/prototipo/09-ficha-de-usuario.png)
+
+*Ficha de usuario.* Datos del usuario en solo consulta y acciones derivadas: desbloquear cuenta (CU-11), editar datos básicos (CU-03), gestionar roles (CU-12/13/14), generar token de recuperación (CU-10) y deshabilitar cuenta (CU-20).
 
 ---
 [← Volver al índice](../00-indice.md)

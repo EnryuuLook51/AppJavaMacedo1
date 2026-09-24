@@ -34,5 +34,17 @@ El rol seleccionado queda retirado. El usuario conserva los demás roles vigente
 | --- | --- |
 | RF-21 | Permitir asignar, cambiar o retirar roles sin modificar la identificación básica del usuario. |
 
+## Diseño
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-14: Retirar Rol de Usuario](../assets/robustez/CU-14-retirar-rol-de-usuario.jpeg)
+
+### Prototipo
+
+![Prototipo: Gestión de roles](../assets/prototipo/12-gestion-de-roles.png)
+
+*Gestión de roles.* Roles asignados con vigencia y estado (modificar vigencia, retirar) y asignación de un nuevo rol; aviso sobre la restricción del rol de administración.
+
 ---
 [← Volver al índice](../00-indice.md)

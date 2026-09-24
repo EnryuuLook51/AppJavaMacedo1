@@ -43,5 +43,17 @@ Queda creada la identificación básica de la persona en el sistema, sin roles a
 | RF-31 | El sistema debe permitir que el administrador registre a un nuevo usuario, estableciendo su identificación básica, su medio de contacto (necesario para la recuperación de acceso) y una contraseña inicial. |
 | RN-17 | Todo usuario debe existir en el sistema mediante un registro previo realizado por un administrador. No se contempla el autorregistro. |
 
+## Diseño
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-01: Registrar Usuario en el Sistema de Acceso](../assets/robustez/CU-01-registrar-usuario-en-el-sistema-de-acceso.png)
+
+### Prototipo
+
+![Prototipo: Registrar nuevo usuario](../assets/prototipo/07-registrar-usuario.png)
+
+*Registrar nuevo usuario.* Identificación básica, nombre, tipo de persona, medio de contacto y contraseña inicial; muestra el aviso de identificación ya registrada.
+
 ---
 [← Volver al índice](../00-indice.md)

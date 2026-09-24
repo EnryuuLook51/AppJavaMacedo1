@@ -36,5 +36,17 @@ La vigencia del rol seleccionado queda actualizada. Los demás roles del usuario
 | RF-21 | Permitir asignar, cambiar o retirar roles sin modificar la identificación básica del usuario. |
 | RF-22 | Permitir que un usuario tenga varios roles simultáneos que evolucionen en el tiempo. |
 
+## Diseño
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-13: Modificar Vigencia de Rol](../assets/robustez/CU-13-modificar-vigencia-de-rol.png)
+
+### Prototipo
+
+![Prototipo: Gestión de roles](../assets/prototipo/12-gestion-de-roles.png)
+
+*Gestión de roles.* Roles asignados con vigencia y estado (modificar vigencia, retirar) y asignación de un nuevo rol; aviso sobre la restricción del rol de administración.
+
 ---
 [← Volver al índice](../00-indice.md)

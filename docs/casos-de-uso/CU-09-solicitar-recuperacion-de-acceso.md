@@ -46,5 +46,21 @@ El usuario recupera el acceso mediante una nueva contraseña. El token temporal 
 | RF-15 | Permitir solicitar recuperación de acceso mediante contacto con un administrador o de forma autogestionada. |
 | RF-17 | El token será de un único uso. |
 
+## Diseño
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-09: Solicitar Recuperación de Acceso](../assets/robustez/CU-09-solicitar-recuperacion-de-acceso.jpeg)
+
+### Prototipo
+
+![Prototipo: Solicitar recuperación de acceso](../assets/prototipo/02-solicitar-recuperacion.png)
+
+*Solicitar recuperación de acceso.* Solicitud de un token temporal de un solo uso, enviado al medio de contacto registrado.
+
+![Prototipo: Restablecer contraseña con token](../assets/prototipo/03-restablecer-con-token.png)
+
+*Restablecer contraseña con token.* Campos de token, nueva contraseña y confirmación; muestra el aviso de token inválido o expirado y la regla de contraseña (mínimo 8 caracteres, con mayúscula, número y símbolo).
+
 ---
 [← Volver al índice](../00-indice.md)

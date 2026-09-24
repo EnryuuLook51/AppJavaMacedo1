@@ -56,5 +56,17 @@ La nueva contraseña queda establecida como vigente y la contraseña anterior qu
 | RNF-02 | Aplicar reglas de seguridad al definir una nueva contraseña. |
 | RNF-03 | El historial de credenciales debe estar encapsulado y no visible a otros componentes. |
 
+## Diseño
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-08: Cambiar Contraseña](../assets/robustez/CU-08-cambiar-contrasena.jpeg)
+
+### Prototipo
+
+![Prototipo: Cambiar mi contraseña](../assets/prototipo/04-cambiar-contrasena.png)
+
+*Cambiar mi contraseña.* Contraseña actual, nueva y confirmación; muestra el aviso de contraseña ya utilizada anteriormente.
+
 ---
 [← Volver al índice](../00-indice.md)

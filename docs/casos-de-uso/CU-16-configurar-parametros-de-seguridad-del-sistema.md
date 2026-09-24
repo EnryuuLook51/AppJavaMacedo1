@@ -47,5 +47,23 @@ Los nuevos valores de configuración rigen para todas las operaciones subsecuent
 | RF-18 | El token tendrá un tiempo de expiración definido. |
 | RF-30 | Permitir que el área de seguridad configure el número máximo de intentos fallidos, el tiempo de inactividad para expiración de sesión, el tiempo de vigencia del token de recuperación y la cantidad de contraseñas históricas a validar, sin necesidad de modificar el código del sistema. |
 
+## Diseño
+
+### Diagrama de casos de uso
+
+![Diagrama 5: Auditoría y Configuración de Seguridad](../assets/casos-de-uso/diagrama-5-auditoria-y-configuracion-de-seguridad.jpeg)
+
+*Diagrama 5: Auditoría y Configuración de Seguridad*
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-16: Configurar Parámetros de Seguridad del Sistema](../assets/robustez/CU-16-configurar-parametros-de-seguridad-del-sistema.jpeg)
+
+### Prototipo
+
+![Prototipo: Parámetros de seguridad](../assets/prototipo/14-parametros-de-seguridad.png)
+
+*Parámetros de seguridad.* Número máximo de intentos, tiempo de inactividad, vigencia del token y contraseñas históricas; muestra el aviso de valor fuera de rango.
+
 ---
 [← Volver al índice](../00-indice.md)

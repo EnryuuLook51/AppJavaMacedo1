@@ -30,5 +30,17 @@ La sesión del equipo actual queda invalidada. Las demás sesiones del usuario p
 | RN-03 | Cada equipo o dispositivo genera una sesión propia; las sesiones son independientes entre sí. |
 | RN-16 | Una sesión solo puede finalizar por tres vías excluyentes entre sí: expiración por inactividad, cierre voluntario del propio usuario, o cierre por intervención de un administrador autorizado. |
 
+## Diseño
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-05: Cerrar Sesión](../assets/robustez/CU-05-cerrar-sesion.png)
+
+### Prototipo
+
+![Prototipo: Mis sesiones activas](../assets/prototipo/06-mis-sesiones-activas.png)
+
+*Mis sesiones activas.* Sesiones por equipo con última actividad y estado; permite cerrar las otras sesiones sin afectar la actual (RF-05 a RF-07).
+
 ---
 [← Volver al índice](../00-indice.md)

@@ -58,5 +58,21 @@ El usuario queda autenticado y dispone de una sesión activa asociada al acceso 
 | RF-20 | Otorgar permisos distintos según el tipo de usuario (estudiante, docente, administrativo). |
 | RF-24 | Determinar las opciones disponibles para el usuario en cada acceso según sus roles vigentes en ese momento. |
 
+## Diseño
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-04: Iniciar Sesión](../assets/robustez/CU-04-iniciar-sesion.png)
+
+### Prototipo
+
+![Prototipo: Iniciar sesión](../assets/prototipo/01-iniciar-sesion.png)
+
+*Iniciar sesión.* Formulario de identificación y contraseña; se muestra el aviso de cuenta bloqueada al superar el número de intentos permitidos.
+
+![Prototipo: Panel principal según rol vigente](../assets/prototipo/05-panel-principal.png)
+
+*Panel principal según rol vigente.* Muestra los roles vigentes del usuario y las opciones de servicio que le corresponden (RF-24).
+
 ---
 [← Volver al índice](../00-indice.md)

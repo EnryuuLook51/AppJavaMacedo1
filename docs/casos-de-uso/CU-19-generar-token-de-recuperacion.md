@@ -34,5 +34,11 @@ Existe un único token de recuperación vigente para el usuario, con tiempo de e
 | RF-18 | El token tendrá un tiempo de expiración definido. |
 | RF-19 | Al generarse un nuevo token de recuperación, cualquier token anterior no utilizado del mismo usuario debe invalidarse automáticamente. |
 
+## Diseño
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-19: Generar Token de Recuperación](../assets/robustez/CU-19-generar-token-de-recuperacion.png)
+
 ---
 [← Volver al índice](../00-indice.md)

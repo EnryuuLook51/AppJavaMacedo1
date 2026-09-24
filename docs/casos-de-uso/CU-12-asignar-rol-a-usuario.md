@@ -45,5 +45,17 @@ El usuario queda con el nuevo rol asignado, conservando los roles previos vigent
 | RF-22 | Permitir que un usuario tenga varios roles simultáneos que evolucionen en el tiempo. |
 | RF-23 | Restringir la asignación del rol de administración del sistema únicamente a trabajadores administrativos autorizados. |
 
+## Diseño
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-12: Asignar Rol a Usuario](../assets/robustez/CU-12-asignar-rol-a-usuario.png)
+
+### Prototipo
+
+![Prototipo: Gestión de roles](../assets/prototipo/12-gestion-de-roles.png)
+
+*Gestión de roles.* Roles asignados con vigencia y estado (modificar vigencia, retirar) y asignación de un nuevo rol; aviso sobre la restricción del rol de administración.
+
 ---
 [← Volver al índice](../00-indice.md)

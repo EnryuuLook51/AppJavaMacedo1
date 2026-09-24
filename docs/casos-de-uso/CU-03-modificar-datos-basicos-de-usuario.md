@@ -1,6 +1,6 @@
 # CU-03: Modificar Datos Básicos de Usuario
 
-Caso de uso principal · Nuevo en v2.0
+Caso de uso principal
 
 ## Actor(es)
 
@@ -41,6 +41,18 @@ Los datos básicos del usuario quedan actualizados. La contraseña, los roles as
 | Código | Descripción |
 | --- | --- |
 | RF-33 | El sistema debe permitir que el administrador modifique los datos básicos de identificación de un usuario (por ejemplo, su medio de contacto), sin afectar su contraseña ni sus roles asignados. |
+
+## Diseño
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-03: Modificar Datos Básicos de Usuario](../assets/robustez/CU-03-modificar-datos-basicos-de-usuario.png)
+
+### Prototipo
+
+![Prototipo: Editar datos básicos](../assets/prototipo/10-editar-datos-basicos.png)
+
+*Editar datos básicos.* Identificación (solo lectura), nombre y medio de contacto; muestra el aviso de formato inválido.
 
 ---
 [← Volver al índice](../00-indice.md)

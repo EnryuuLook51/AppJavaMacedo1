@@ -46,5 +46,23 @@ La sesión seleccionada queda invalidada. Las demás sesiones del usuario perman
 | RF-27 | Permitir actuar sobre sesiones activas (por ejemplo, cerrarlas). |
 | RF-28 | Verificar que el actor posea el rol de administración antes de ejecutar cualquier operación administrativa. |
 
+## Diseño
+
+### Diagrama de casos de uso
+
+![Diagrama 3: Administración de sesiones y recuperación de acceso](../assets/casos-de-uso/diagrama-3-sesiones-y-recuperacion-de-acceso.jpeg)
+
+*Diagrama 3: Administración de sesiones y recuperación de acceso*
+
+### Diagrama de robustez
+
+![Diagrama de robustez de CU-07: Cerrar Sesión de Usuario](../assets/robustez/CU-07-cerrar-sesion-de-usuario.jpeg)
+
+### Prototipo
+
+![Prototipo: Sesiones activas de un usuario](../assets/prototipo/11-sesiones-de-un-usuario.png)
+
+*Sesiones activas de un usuario.* Sesiones del usuario con equipo, dirección de red y última actividad; cierre individual; aviso de que la intervención queda en la bitácora (CU-18).
+
 ---
 [← Volver al índice](../00-indice.md)
