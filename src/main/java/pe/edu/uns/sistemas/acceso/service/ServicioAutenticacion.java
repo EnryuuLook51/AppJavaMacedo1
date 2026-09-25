@@ -35,7 +35,7 @@ public class ServicioAutenticacion implements IControlAcceso {
             usuario.cuenta().registrarFallo(politica().getMaxIntentos());
             motivo=usuario.cuenta().getEstado()==EstadoCuenta.BLOQUEADA?"Cuenta bloqueada por intentos fallidos.":"Credenciales incorrectas.";
         }
-        auditoria.registrarIntento(id,motivo==null?ResultadoAcceso.EXITOSO:ResultadoAcceso.RECHAZADO,motivo,equipo,red);
+        auditoria.registrarIntento(usuario,id,motivo==null?ResultadoAcceso.EXITOSO:ResultadoAcceso.RECHAZADO,motivo,equipo,red);
         if(motivo!=null)throw new AccesoException(401,motivo);
         usuario.cuenta().reiniciarFallos();
         return sesiones.save(new Sesion(usuario,equipo,red));
@@ -55,17 +55,38 @@ public class ServicioAutenticacion implements IControlAcceso {
         sesiones.findByEstado(EstadoSesion.ACTIVA).stream().filter(s->s.haExpirado(ahora,politica().getInactividadMaxima())).forEach(s->cerrar(s,MotivoCierre.INACTIVIDAD));
     }
     public void cambiarContrasena(Sesion sesion,String actual,String nueva){sesion.usuario().cuenta().credencial().cambiar(actual,nueva,politica(),encoder);}
-    public void solicitarRecuperacion(String id){usuarios.findByIdentificacion(id).filter(u->u.cuenta().getEstado()!=EstadoCuenta.DESHABILITADA).ifPresent(this::iniciarRecuperacion);}
+    public void solicitarRecuperacion(String id){
+        Usuario usuario=usuarios.findByIdentificacion(id).orElse(null);
+        if(usuario==null || usuario.cuenta().getEstado()==EstadoCuenta.DESHABILITADA){
+            auditoria.registrarSolicitudRecuperacion(id,usuario,"AUTOGESTION",ResultadoSolicitud.RECHAZADA,
+                usuario==null?"Identificación no registrada.":"Cuenta deshabilitada.",null);
+            return;
+        }
+        recuperar(usuario,"AUTOGESTION");
+    }
     public void iniciarRecuperacion(Usuario usuario){
         if(usuario.cuenta().getEstado()==EstadoCuenta.DESHABILITADA)throw new IllegalArgumentException("Una cuenta deshabilitada no puede recuperar acceso.");
+        recuperar(usuario,"ADMINISTRACION");
+    }
+    private void recuperar(Usuario usuario,String canal){
+        try{
+            TokenRecuperacion token=generarToken(usuario);
+            auditoria.registrarSolicitudRecuperacion(usuario.getIdentificacion(),usuario,canal,ResultadoSolicitud.ENVIADA,null,token);
+        }catch(org.springframework.mail.MailException e){
+            auditoria.registrarSolicitudRecuperacion(usuario.getIdentificacion(),usuario,canal,ResultadoSolicitud.ERROR_ENVIO,"No se pudo enviar el correo de recuperación.",null);
+            // Confirma únicamente el evento de fallo; el token anterior permanece válido.
+            throw new AccesoException(503,"No se pudo enviar el correo de recuperación. Revise el servicio SMTP.");
+        }
+    }
+    private TokenRecuperacion generarToken(Usuario usuario){
         byte[] bytes=new byte[32];new SecureRandom().nextBytes(bytes);
         String valor=Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
         SimpleMailMessage mensaje=new SimpleMailMessage();
-        mensaje.setFrom(remitente);mensaje.setTo(usuario.getMedioContacto());mensaje.setSubject("Recuperación de acceso institucional");
+        mensaje.setFrom(remitente);mensaje.setTo(usuario.getMedioContacto());mensaje.setSubject("Universidad Nacional del Pacífico · Recuperación de acceso institucional");
         mensaje.setText("Su token de recuperación es: "+valor+"\nVigencia: "+politica().getVigenciaToken()+" minutos. Es de un solo uso. Si la cuenta está bloqueada, un administrador debe desbloquearla.");
         mail.send(mensaje);
         tokens.findByUsuario(usuario).forEach(TokenRecuperacion::invalidar);
-        tokens.save(new TokenRecuperacion(usuario,valor,politica().getVigenciaToken()));
+        return tokens.save(new TokenRecuperacion(usuario,valor,politica().getVigenciaToken()));
     }
     public void completarRecuperacion(String valor,String nueva){
         TokenRecuperacion token=tokens.findByHashToken(TokenRecuperacion.hash(valor)).orElseThrow(()->new IllegalArgumentException("Token inválido o expirado."));

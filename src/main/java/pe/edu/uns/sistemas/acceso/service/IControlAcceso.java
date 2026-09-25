@@ -7,4 +7,5 @@ public interface IControlAcceso {
     void iniciarRecuperacion(Usuario usuario);
     void desbloquearCuenta(CuentaAcceso cuenta);
     void deshabilitarCuenta(Usuario usuario);
+    void cerrarPorInactividad(java.time.Instant ahora);
 }

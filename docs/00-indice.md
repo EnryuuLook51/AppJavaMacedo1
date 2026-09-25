@@ -1,10 +1,11 @@
-# Sistema de acceso a servicios universitarios
+# Universidad Nacional del Pacífico · Sistema de acceso a servicios universitarios
 
 Informe del caso: análisis de requerimientos, casos de uso, diseño y prototipo.
 
 ## Documentos generales
 
 - [Datos del informe](informe.md)
+- [Guía de pruebas y capturas de los CU-01 a CU-20](guia-pruebas-y-capturas.md)
 - [Requisitos por caso](requisitos.md)
 - [Actores](actores.md)
 - [Reglas de negocio](reglas-de-negocio.md)

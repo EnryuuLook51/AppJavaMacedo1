@@ -1,0 +1,25 @@
+services:
+  app:
+    build: .
+    image: sys-ac:1.0.0
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8400:8080"
+    env_file: .env
+    environment:
+      SERVER_ADDRESS: 0.0.0.0
+      PORT: 8080
+      DB_URL: jdbc:h2:file:/app/data/acceso
+      SERVER_FORWARD_HEADERS_STRATEGY: framework
+      JAVA_TOOL_OPTIONS: -XX:MaxRAMPercentage=70.0
+    volumes:
+      - /opt/apps/data/sys-ac:/app/data
+    mem_limit: 768m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"

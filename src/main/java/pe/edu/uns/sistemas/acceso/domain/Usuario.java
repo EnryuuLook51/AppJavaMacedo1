@@ -17,7 +17,7 @@ public class Usuario {
     public Usuario(String identificacion,String nombres,String contacto,TipoPersona tipo,boolean autorizado,CuentaAcceso cuenta) {
         if(identificacion==null || !identificacion.matches("[a-zA-Z0-9._-]{3,40}")) throw new IllegalArgumentException("Identificación inválida (3–40 letras, números, punto o guion).");
         if(tipo==null || (autorizado && tipo!=TipoPersona.ADMINISTRATIVO)) throw new IllegalArgumentException("Solo un trabajador administrativo puede ser autorizado.");
-        this.identificacion=identificacion; tipoPersona=tipo; administrativoAutorizado=autorizado; this.cuenta=cuenta; actualizarDatosBasicos(nombres,contacto);
+        this.identificacion=identificacion; tipoPersona=tipo; administrativoAutorizado=autorizado; this.cuenta=cuenta; cuenta.vincularUsuario(this); actualizarDatosBasicos(nombres,contacto);
     }
     public void actualizarDatosBasicos(String nombres,String contacto) {
         if(nombres==null || nombres.isBlank() || nombres.length()>120 || contacto==null || contacto.length()>200 || !contacto.matches("[^\\s@]+@[^\\s@]+\\.[^\\s@]+"))

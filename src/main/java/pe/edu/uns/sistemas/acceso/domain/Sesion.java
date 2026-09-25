@@ -6,7 +6,7 @@ import pe.edu.uns.sistemas.acceso.domain.Tipos.*;
 @Entity
 public class Sesion {
     @Id private UUID idSesion=UUID.randomUUID();
-    @ManyToOne(optional=false) private Usuario usuario;
+    @ManyToOne(optional=false) private CuentaAcceso cuenta;
     private String equipo;
     @Column(unique=true) private String hashAutenticacion;
     private String direccionRed;
@@ -15,10 +15,10 @@ public class Sesion {
     private Instant cerradaEn;
     @Enumerated(EnumType.STRING) private EstadoSesion estado=EstadoSesion.ACTIVA;
     protected Sesion() {}
-    public Sesion(Usuario usuario,String equipo,String red){this.usuario=usuario;this.equipo=equipo;direccionRed=red;}
+    public Sesion(Usuario usuario,String equipo,String red){this.cuenta=usuario.cuenta();this.equipo=equipo;direccionRed=red;}
     public UUID getIdSesion(){return idSesion;}
     public void vincularToken(String token){hashAutenticacion=TokenRecuperacion.hash(token);}
-    public Usuario usuario(){return usuario;}
+    public Usuario usuario(){return cuenta.usuario();}
     public String getEquipo(){return equipo;}
     public String getDireccionRed(){return direccionRed;}
     public Instant getIniciadaEn(){return iniciadaEn;}

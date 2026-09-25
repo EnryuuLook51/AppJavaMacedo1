@@ -38,14 +38,21 @@ public class ServicioAdministracion {
     public void asignarRol(Usuario actor,Usuario usuario,UUID rolId,Instant inicio,Instant fin){
         autorizacion.exigirAdministracion(actor);Rol rol=roles.findById(rolId).orElseThrow(()->new IllegalArgumentException("Rol inexistente."));
         autorizacion.validarAsignacion(usuario,rol);
+        AsignacionRol nueva=new AsignacionRol(rol,inicio,fin);
+        validarPeriodoDisponible(usuario,rolId,null,inicio,fin);
+        usuario.asignar(nueva);auditoria.registrarIntervencion(actor,usuario,"ASIGNAR_ROL",rol.getNombre());
+    }
+    private void validarPeriodoDisponible(Usuario usuario,UUID rolId,UUID excluida,Instant inicio,Instant fin){
         if(usuario.getAsignaciones().stream().anyMatch(a->a.getRol().getIdRol().equals(rolId)&&a.getRetiradaEn()==null &&
+            !a.getIdAsignacion().equals(excluida) &&
             (fin==null || a.getInicioVigencia().isBefore(fin)) && (a.getFinVigencia()==null || inicio.isBefore(a.getFinVigencia()))))
             throw new IllegalArgumentException("Ya existe una asignación de este rol en ese período.");
-        usuario.asignar(new AsignacionRol(rol,inicio,fin));auditoria.registrarIntervencion(actor,usuario,"ASIGNAR_ROL",rol.getNombre());
     }
     private AsignacionRol asignacion(Usuario usuario,UUID id){return usuario.getAsignaciones().stream().filter(a->a.getIdAsignacion().equals(id)).findFirst().orElseThrow(()->new IllegalArgumentException("Asignación inexistente."));}
     public void modificarVigencia(Usuario actor,Usuario usuario,UUID id,Instant inicio,Instant fin){
         autorizacion.exigirAdministracion(actor);AsignacionRol a=asignacion(usuario,id);
+        new AsignacionRol(a.getRol(),inicio,fin); // Valida fechas antes de comprobar solapamientos.
+        validarPeriodoDisponible(usuario,a.getRol().getIdRol(),id,inicio,fin);
         a.modificarVigencia(inicio,fin);auditoria.registrarIntervencion(actor,usuario,"MODIFICAR_VIGENCIA",a.getRol().getNombre());
     }
     public void retirarRol(Usuario actor,Usuario usuario,UUID id){autorizacion.exigirAdministracion(actor);AsignacionRol a=asignacion(usuario,id);a.retirar(Instant.now());auditoria.registrarIntervencion(actor,usuario,"RETIRAR_ROL",a.getRol().getNombre());}

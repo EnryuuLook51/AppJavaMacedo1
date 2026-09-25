@@ -9,8 +9,10 @@ public abstract class RegistroAuditoria {
     private Instant fechaHora=Instant.now();
     private String contexto;
     private String usuarioObjetivo;
+    @ManyToOne private Usuario objetivo;
     protected RegistroAuditoria() {}
     protected RegistroAuditoria(String objetivo,String contexto){usuarioObjetivo=objetivo;this.contexto=contexto;}
+    public void vincularObjetivo(Usuario usuario){objetivo=usuario;}
     public UUID getIdEvento(){return idEvento;}
     public Instant getFechaHora(){return fechaHora;}
     public String getContexto(){return contexto;}

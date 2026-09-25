@@ -35,3 +35,5 @@ Administración exige ADMINISTRAR; política exige CONFIGURAR y auditoría AUDIT
 Tipos de persona: ESTUDIANTE, DOCENTE, ADMINISTRATIVO. Roles: esos tres más ADMINISTRADOR y SEGURIDAD.
 Rangos: intentos 1–20; minutos 1–1440; históricas 1–24.
 
+
+La bitácora devuelve `IntentoAcceso`, `IntervencionAdministrativa`, `CierreSesion` y `SolicitudRecuperacion`. El filtro `resultado` acepta EXITOSO, RECHAZADO, ENVIADA, RECHAZADA o ERROR_ENVIO. Las solicitudes incluyen canal, resultado, motivo y tokenGenerado (UUID de referencia; nunca el secreto). El fallo de entrega SMTP responde 503, persiste el evento ERROR_ENVIO y conserva cualquier token anterior vigente.

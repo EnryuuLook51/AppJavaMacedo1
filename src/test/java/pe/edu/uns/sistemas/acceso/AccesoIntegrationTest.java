@@ -33,6 +33,9 @@ class AccesoIntegrationTest {
     @Autowired AuditoriaRepository auditoria;
     @Autowired PoliticaRepository politicas;
     @Autowired RolRepository roles;
+    @Autowired TokenRepository tokens;
+    @Autowired GestorExpiracionSesiones temporizador;
+    @Autowired org.springframework.jdbc.core.JdbcTemplate jdbc;
     @Autowired TestRestTemplate http;
     @Autowired PlatformTransactionManager manager;
     @MockitoBean JavaMailSender mail;
@@ -126,5 +129,74 @@ class AccesoIntegrationTest {
         String id=crear();
         new TransactionTemplate(manager).execute(status->{assertTrue(usuarios.findByIdentificacion(id).isPresent());return null;});
     }
+    @Test void recuperacionAuditaCanalesRechazosYFalloDeCorreoSinInvalidarTokenAnterior(){
+        String id=crear();String vigente=tokenPara(id);
+        tx.ejecutar(()->{
+            SolicitudRecuperacion solicitud=auditoria.findAllByOrderByFechaHoraDesc().stream()
+                .filter(e->e instanceof SolicitudRecuperacion && id.equals(e.getUsuarioObjetivo()))
+                .map(SolicitudRecuperacion.class::cast).findFirst().orElseThrow();
+            assertEquals(ResultadoSolicitud.ENVIADA,solicitud.getResultado());
+            assertEquals("AUTOGESTION",solicitud.getCanal());
+            assertNotNull(solicitud.getTokenGenerado());return true;
+        });
+        doThrow(new org.springframework.mail.MailSendException("SMTP no disponible")).when(mail).send(any(SimpleMailMessage.class));
+        AccesoException error=assertThrows(AccesoException.class,()->tx.ejecutar(()->{acceso.solicitarRecuperacion(id);return true;}));
+        assertEquals(503,error.getStatus());
+        tx.ejecutar(()->{
+            assertEquals(1,tokens.findByUsuario(usuarios.findByIdentificacion(id).orElseThrow()).size());
+            assertEquals(1,new ServicioAuditoria(auditoria,permisos).consultar(actor(),id,"ERROR_ENVIO",null,null,null).size());
+            acceso.completarRecuperacion(vigente,"RecuperadaSegura2!");return true;
+        });
+        reset(mail);
+        tx.ejecutar(()->{admin.recuperarAcceso(actor(),usuarios.findByIdentificacion(id).orElseThrow());return true;});
+        tx.ejecutar(()->{
+            assertTrue(auditoria.findAllByOrderByFechaHoraDesc().stream().anyMatch(e->e instanceof SolicitudRecuperacion s && id.equals(s.getUsuarioObjetivo()) && s.getCanal().equals("ADMINISTRACION")));
+            acceso.solicitarRecuperacion("inexistente-"+id);
+            assertEquals(1,new ServicioAuditoria(auditoria,permisos).consultar(actor(),"inexistente-"+id,"RECHAZADA",null,null,null).size());
+            return true;
+        });
+    }
+    @Test void temporizadorCierraSoloSesionVencidaYRegistraUnSoloCierre(){
+        String id=crear();UUID[] ids=new UUID[2];Instant ahora=Instant.now();
+        tx.ejecutar(()->{
+            Sesion antigua=acceso.iniciarSesion(id,"PrimeraSegura1!","Antiguo","127.0.0.1");
+            antigua.registrarActividad(ahora.minusSeconds(1300));ids[0]=antigua.getIdSesion();
+            ids[1]=acceso.iniciarSesion(id,"PrimeraSegura1!","Activo","127.0.0.2").getIdSesion();return true;
+        });
+        temporizador.ejecutar(ahora);temporizador.ejecutar(ahora);
+        tx.ejecutar(()->{
+            assertEquals(EstadoSesion.CERRADA,sesiones.findById(ids[0]).orElseThrow().getEstado());
+            assertEquals(EstadoSesion.ACTIVA,sesiones.findById(ids[1]).orElseThrow().getEstado());
+            assertEquals(1,auditoria.findAllByOrderByFechaHoraDesc().stream().filter(e->e instanceof CierreSesion c && c.getSesion().equals(ids[0]) && c.getMotivo()==MotivoCierre.INACTIVIDAD).count());
+            return true;
+        });
+    }
+    @Test void editarVigenciaRechazaSolapamientoYConservaPeriodoOriginal(){
+        String id=crear();Instant inicio=Instant.now();UUID[] asignaciones=new UUID[2];
+        tx.ejecutar(()->{
+            Usuario u=usuarios.findByIdentificacion(id).orElseThrow();UUID rol=roles.findByNombre("ESTUDIANTE").orElseThrow().getIdRol();
+            admin.asignarRol(actor(),u,rol,inicio,inicio.plusSeconds(60));
+            admin.asignarRol(actor(),u,rol,inicio.plusSeconds(120),null);
+            asignaciones[0]=u.getAsignaciones().get(0).getIdAsignacion();asignaciones[1]=u.getAsignaciones().get(1).getIdAsignacion();return true;
+        });
+        assertThrows(IllegalArgumentException.class,()->tx.ejecutar(()->{admin.modificarVigencia(actor(),usuarios.findByIdentificacion(id).orElseThrow(),asignaciones[1],inicio.plusSeconds(30),null);return true;}));
+        tx.ejecutar(()->{
+            AsignacionRol segunda=usuarios.findByIdentificacion(id).orElseThrow().getAsignaciones().stream().filter(a->a.getIdAsignacion().equals(asignaciones[1])).findFirst().orElseThrow();
+            assertEquals(inicio.plusSeconds(120).getEpochSecond(),segunda.getInicioVigencia().getEpochSecond());return true;
+        });
+    }
+    @Test void relacionesPersistidasVinculanCuentaSesionTokenYAuditoria(){
+        String id=crear();tokenPara(id);
+        tx.ejecutar(()->{Sesion s=acceso.iniciarSesion(id,"PrimeraSegura1!","Relaciones","127.0.0.1");acceso.cerrarSesionActual(s);return true;});
+        Integer relaciones=jdbc.queryForObject("""
+            select count(*) from usuario u
+            join cuenta_acceso c on c.id_cuenta=u.cuenta_id_cuenta
+            join sesion s on s.cuenta_id_cuenta=c.id_cuenta
+            join token_recuperacion t on t.cuenta_id_cuenta=c.id_cuenta
+            join registro_auditoria cierre on cierre.sesion_cerrada_id=s.id_sesion
+            join registro_auditoria solicitud on solicitud.token_generado_id=t.id_token
+            where u.identificacion=?
+            """,Integer.class,id);
+        assertEquals(1,relaciones);
+    }
 }
-

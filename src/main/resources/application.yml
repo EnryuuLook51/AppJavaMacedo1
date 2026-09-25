@@ -22,4 +22,4 @@ spring:
       mail.smtp.timeout: 5000
 app:
   bootstrap-password: ${ADMIN_PASSWORD:}
-  mail-from: ${MAIL_FROM:acceso@universidad.edu.pe}
+  mail-from: ${MAIL_FROM:acceso@example.com}

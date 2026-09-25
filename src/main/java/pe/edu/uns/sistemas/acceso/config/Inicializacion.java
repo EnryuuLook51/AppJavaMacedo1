@@ -3,7 +3,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
 import java.util.*;
 import java.time.Instant;
 import pe.edu.uns.sistemas.acceso.domain.*;
@@ -24,7 +23,7 @@ public class Inicializacion implements ApplicationRunner {
             crearRol("SEGURIDAD",Map.of("AUDITAR","Consultar auditoría","CONFIGURAR","Configurar política de seguridad"));
             if(usuarios.count()==0){
                 if(password.isBlank())throw new IllegalArgumentException("Primer inicio: configure ADMIN_PASSWORD con una contraseña segura (8–72 caracteres, mayúscula, minúscula, número y símbolo).");
-                Usuario admin=new Usuario("admin","Administrador del sistema","admin@universidad.edu.pe",TipoPersona.ADMINISTRATIVO,true,acceso.inicializarCredencial(password));
+                Usuario admin=new Usuario("admin","Administrador del sistema","admin@example.com",TipoPersona.ADMINISTRATIVO,true,acceso.inicializarCredencial(password));
                 admin.asignar(new AsignacionRol(roles.findByNombre("ADMINISTRADOR").orElseThrow(),Instant.now(),null));
                 admin.asignar(new AsignacionRol(roles.findByNombre("SEGURIDAD").orElseThrow(),Instant.now(),null));usuarios.save(admin);
             }
@@ -35,6 +34,4 @@ public class Inicializacion implements ApplicationRunner {
         if(roles.findByNombre(nombre).isPresent())return;
         Set<Permiso> lista=new HashSet<>();codigos.forEach((c,d)->lista.add(permisos.findById(c).orElseGet(()->permisos.save(new Permiso(c,d)))));roles.save(new Rol(nombre,lista));
     }
-    @Scheduled(initialDelay=60000,fixedDelay=30000)
-    public void expirar(){tx.ejecutar(()->{acceso.cerrarPorInactividad(Instant.now());return true;});}
 }

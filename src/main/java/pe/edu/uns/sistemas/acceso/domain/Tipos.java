@@ -6,5 +6,6 @@ public final class Tipos {
     public enum EstadoSesion { ACTIVA, CERRADA }
     public enum EstadoToken { EMITIDO, USADO, INVALIDADO }
     public enum ResultadoAcceso { EXITOSO, RECHAZADO }
+    public enum ResultadoSolicitud { ENVIADA, RECHAZADA, ERROR_ENVIO }
     public enum MotivoCierre { VOLUNTARIO, INACTIVIDAD, ADMINISTRACION }
 }

@@ -1,6 +1,6 @@
 # Informe del caso de Sistema de Acceso a servicios universitarios
 
-- **Universidad:** Universidad Nacional del Santa
+- **Universidad:** Universidad Nacional del Pacífico
 - **Facultad:** Facultad de Ingeniería
 - **Escuela:** Escuela Profesional de Ingeniería de Sistemas e Informática
 - **Asignatura:** Arquitectura de Software Empresarial

@@ -5,6 +5,7 @@ import pe.edu.uns.sistemas.acceso.domain.Tipos.*;
 @Entity
 public class CuentaAcceso {
     @Id private UUID idCuenta = UUID.randomUUID();
+    @OneToOne(mappedBy="cuenta",optional=false) private Usuario usuario;
     @Enumerated(EnumType.STRING) private EstadoCuenta estado = EstadoCuenta.ACTIVA;
     private int fallosConsecutivos;
     @OneToOne(cascade=CascadeType.ALL,optional=false) private Credencial credencial;
@@ -14,6 +15,8 @@ public class CuentaAcceso {
     public EstadoCuenta getEstado() { return estado; }
     public int getFallosConsecutivos() { return fallosConsecutivos; }
     public Credencial credencial() { return credencial; }
+    public Usuario usuario() { return usuario; }
+    void vincularUsuario(Usuario usuario) { this.usuario=usuario; }
     public void registrarFallo(int limite) { if(++fallosConsecutivos>=limite) estado=EstadoCuenta.BLOQUEADA; }
     public void reiniciarFallos() { fallosConsecutivos=0; }
     public void desbloquear() {
